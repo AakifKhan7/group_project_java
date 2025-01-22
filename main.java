@@ -20,7 +20,7 @@ class restaurant {
                 break;
             default:
                 System.out.println("Invalid choice");
-                System.out.println("sundari!");
+                
         }
     }
 }
