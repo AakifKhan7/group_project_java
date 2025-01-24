@@ -24,3 +24,10 @@ class restaurant {
         }
     }
 }
+class Customer{
+
+}
+class Manager{
+    System.out.println("Choose your Food from given menue");
+    
+}
