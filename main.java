@@ -51,7 +51,7 @@ class Manager{
                         "Baingan Bharta (Mashed Eggplant)\n" + //
                         "Palak Paneer (Spinach and Cottage Cheese)\n" + //
                         "Veg Biryani\n" + //
-                        "Rajma (Kidney Bean Curry)")
+                        "Rajma (Kidney Bean Curry)");
     }
 
 }
