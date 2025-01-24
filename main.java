@@ -28,13 +28,15 @@ class Customer{
 
 }
 class Manager{
+    Scanner sc=new Scanner(System.in);
+    void management(){
     System.out.println("Choose your Food from given menue");
     System.out.println("Choose number for given type of food\n\t1.vegetarian\n2.Non-Vegetarian ");
     int choiceFood = sc.nextInt();
     if(choiceFood==1){
         System.out.println("You chose Vegetatian food:-");
         System.out.println("In Vegtarian we have more than 100 dishes,kindly chose your favourite from given list......");
-        Sytem.out.println("1. Indian Vegetarian Dishes:\n" + //
+        System.out.println("1. Indian Vegetarian Dishes:\n" + //
                         "Starters & Snacks:\n" + //
                         "\n" + //
                         "Paneer Tikka\n" + //
@@ -53,5 +55,5 @@ class Manager{
                         "Veg Biryani\n" + //
                         "Rajma (Kidney Bean Curry)");
     }
-
+    }
 }
