@@ -13,8 +13,9 @@ class restaurant {
                 System.out.println("Manager");
                 break;
             case 2:
-                System.out.println("Customer");
-                break;
+                Customer customer = new Customer();
+                customer.selectFood();
+            break;
             case 3:
                 System.out.println("Exit");
                 break;
@@ -56,6 +57,7 @@ class Customer {
         int selectedDish=sc.nextInt();
     }
 
+
     void payment() {
         System.out.println("Choose your payment method");
         String methodToPay = " 1. Credit Card\n 2. Debit Card\n 3. Net Banking\n 4. UPI\n 5. Cash";
@@ -92,6 +94,8 @@ class Customer {
 }
 
 class Menu{
+    String[] vegMenu;
+    String[] nonVegMenu;
     void vegetarianFood() {
         System.out.println("You chose Vegetarian food:-");
         System.out.println(
@@ -120,6 +124,10 @@ class Menu{
                 "19. Veggie Sushi Rolls\n" +
                 "20. Greek Salad\n\n" +
                 "### **Snacks and Starters**\n";
+                vegMenu = menu.split("\n");
+                for(String item : vegMenu){
+                    System.out.println(item);
+                }
     }
 
     void nonVegetarian(){
@@ -150,6 +158,13 @@ class Menu{
                 "19. Beef Tacos\n" +
                 "20. Beef Wellington\n\n" +
                 "### **Snacks and Starters**\n";
+
+                nonVegMenu = menu.split("\n");
+
+                // print menu
+                for (String item : nonVegMenu) {
+                    System.out.println(item);
+                }
     }
 }
 
@@ -157,10 +172,16 @@ class Menu{
 class Payment{
     Scanner sc = new Scanner(System.in);
     void payCash(int billTotal){
-        System.out.println("Enter amount");
-        double Amount = sc.nextInt();
+        double amount = 0;
+        do{
+            System.out.println("Enter amount");
+            amount = sc.nextDouble();
+        }while (amount < billTotal);
+            
+        if(amount >= billTotal){
+            System.out.println(amount - billTotal + "You get return");
+        }
 
-        if()
     }
 }
 
