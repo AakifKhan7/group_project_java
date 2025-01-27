@@ -98,8 +98,7 @@ class Menu{
     String[] nonVegMenu;
     void vegetarianFood() {
         System.out.println("You chose Vegetarian food:-");
-        System.out.println(
-                "In Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
+        System.out.println("In Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
         System.out.println("Here’s a list of popular vegetable-based dishes");
         String menu = "### **Indian Vegetable Dishes**\n" +
                 "1. Paneer Butter Masala\n" +
@@ -132,8 +131,7 @@ class Menu{
 
     void nonVegetarian(){
         System.out.println("You chose Non-Vegetarian food:-");
-        System.out.println(
-                "In Non-Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
+        System.out.println( "In Non-Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
         System.out.println("Here’s a list of popular Non-vegetable-based dishes");
         String menu = "### **Indian Non-Vegetarian Dishes**\n" +
                 "1. Butter Chicken\n" +
