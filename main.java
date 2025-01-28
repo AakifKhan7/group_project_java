@@ -37,6 +37,7 @@ class Customer {
     
 
     void selectFood(){
+
         System.out.println("Choose your Food from given menu");
         System.out.println("Choose number for given type of food\n\t1.vegetarian\n2.Non-Vegetarian ");
         int choiceFood = sc.nextInt();
@@ -124,6 +125,7 @@ class Menu{
                 "20. Greek Salad\n\n" +
                 "### **Snacks and Starters**\n";
                 vegMenu = menu.split("\n");
+
                 for(String item : vegMenu){
                     System.out.println(item);
                 }
