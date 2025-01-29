@@ -203,17 +203,17 @@ class Menu {
     }
 }
 
-class Bill{
-    Menu menu = new Menu();
-    String[] item = menu.vegMenu;
-    int[] price = menu.vegPrice;
+class Bill extends Customer{
+//    Menu menu = new Menu();
+//    String[] item = menu.vegMenu;
+//    int[] price = menu.vegPrice;
     void calculateBill(int[] selectedFood) {
         int billTotal = 0;
         for (int i = 0; i < selectedFood.length; i++) {
             int dishIndex = selectedFood[i] - 1;
-            if (dishIndex >= 0 && dishIndex < item.length) {
-                System.out.println(item[dishIndex] + " - Rs." + price[dishIndex]);
-                billTotal += price[dishIndex];
+            if (dishIndex >= 0 && dishIndex < menu.vegMenu.length) {
+                System.out.println(menu.vegMenu[dishIndex] + " - Rs." + menu.vegPrice[dishIndex]);
+                billTotal += menu.vegPrice[dishIndex];
             } else {
                 System.out.println("Invalid dish selected.");
             }
@@ -238,6 +238,23 @@ class Payment {
         }
 
     }
+	
+	void payCard(int billTotal){
+		double amount=0;
+		double cardBalance=50000;
+		System.out.println("Enter valid details of your credit card:-");
+		System.out.println("Enter Your card number:");
+		int cardNo=sc.nextInt();
+				
+		do{
+			System.out.println("Enter Your 4 digit PIN:");
+			int cardPin=sc.nextInt();
+		}while(cardPin>999 && cardPin<=1000);		
+		
+		if(cardBalance>=billTotal){
+			System.out.println(cardBalance-billTotal+"Visit again!");
+		}
+	}
 }
 
 class Manager {
