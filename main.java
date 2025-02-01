@@ -29,8 +29,7 @@ class Restaurant {
 
 class Customer {
     Scanner sc = new Scanner(System.in);
-    Menu menu = new Menu();
-
+    // Menu menu = new Menu();
 
     Customer() {
         System.out.println("Welcome to virtual restaurant");
@@ -38,32 +37,30 @@ class Customer {
 
     void selectFood() {
 
-
         System.out.println("Choose number for given type of food\n\t1.vegetarian\n2.Non-Vegetarian ");
         int choiceFood = sc.nextInt();
 
         System.out.println("Choose your Food from given menu");
         if (choiceFood == 1) {
-            menu.vegetarianFood();
+            Menu.vegetarianFood();
         } else if (choiceFood == 2) {
-            menu.nonVegetarian();
+            Menu.nonVegetarian();
         } else {
             System.out.println("Invalid choice");
             return;
         }
-        
-        
+
         System.out.println("How many items you want to order?");
         int numberOfItems = sc.nextInt();
         int[] selectedFood = new int[numberOfItems];
         for (int itemCount = 0; itemCount < numberOfItems; itemCount++) {
-            System.out.print("Enter the number of your dish (1 to " + menu.vegMenu.length + "): ");
+            System.out.print("Enter the number of your dish (1 to " + Menu.vegMenu.length + "): ");
             int selectedDish = sc.nextInt();
-            if (selectedDish >= 1 && selectedDish <= menu.vegMenu.length) {
+            if (selectedDish >= 1 && selectedDish <= Menu.vegMenu.length) {
                 selectedFood[itemCount] = selectedDish;
             } else {
                 System.out.println("Invalid dish number, please try again.");
-                itemCount--;  // Decrement to retry for this item
+                itemCount--; // Decrement to retry for this item
             }
         }
 
@@ -106,16 +103,16 @@ class Customer {
 }
 
 class Menu {
-    
-    int sizeOfVegPrice = 20;
-    String[] vegMenu = new String[sizeOfVegPrice];
-    int[] vegPrice = new int[sizeOfVegPrice];
 
-    int sizeOfNonVegPrice = 20;
-    String[] nonVegMenu = new String[sizeOfNonVegPrice];
-    int[] nonVegPrice = new int[sizeOfNonVegPrice];
+   static  int sizeOfVegPrice = 20;
+    static String[] vegMenu = new String[sizeOfVegPrice];
+    static int[] vegPrice = new int[sizeOfVegPrice];
 
-    void vegetarianFood() {
+    static int sizeOfNonVegPrice = 20;
+    static String[] nonVegMenu = new String[sizeOfNonVegPrice];
+    static int[] nonVegPrice = new int[sizeOfNonVegPrice];
+
+    static void vegetarianFood() {
         System.out.println("You chose Vegetarian food:-");
         System.out.println(
                 "In Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
@@ -165,7 +162,7 @@ class Menu {
         }
     }
 
-    void nonVegetarian() {
+    static void nonVegetarian() {
         System.out.println("You chose Non-Vegetarian food:-");
         System.out.println(
                 "In Non-Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
@@ -203,17 +200,18 @@ class Menu {
     }
 }
 
-class Bill extends Customer{
-//    Menu menu = new Menu();
-//    String[] item = menu.vegMenu;
-//    int[] price = menu.vegPrice;
+class Bill{
+    // Menu menu = new Menu();
+    String[] item = Menu.vegMenu;
+    int[] price = Menu.vegPrice;
+
     void calculateBill(int[] selectedFood) {
         int billTotal = 0;
         for (int i = 0; i < selectedFood.length; i++) {
             int dishIndex = selectedFood[i] - 1;
-            if (dishIndex >= 0 && dishIndex < menu.vegMenu.length) {
-                System.out.println(menu.vegMenu[dishIndex] + " - Rs." + menu.vegPrice[dishIndex]);
-                billTotal += menu.vegPrice[dishIndex];
+            if (dishIndex >= 0 && dishIndex < Menu.vegMenu.length) {
+                System.out.println(Menu.vegMenu[dishIndex] + " - Rs." + Menu.vegPrice[dishIndex]);
+                billTotal += Menu.vegPrice[dishIndex];
             } else {
                 System.out.println("Invalid dish selected.");
             }
@@ -238,23 +236,23 @@ class Payment {
         }
 
     }
-	
-	void payCard(int billTotal){
-		double amount=0;
-		double cardBalance=50000;
-		System.out.println("Enter valid details of your credit card:-");
-		System.out.println("Enter Your card number:");
-		int cardNo=sc.nextInt();
-				
-		do{
-			System.out.println("Enter Your 4 digit PIN:");
-			int cardPin=sc.nextInt();
-		}while(cardPin>999 && cardPin<=1000);		
-		
-		if(cardBalance>=billTotal){
-			System.out.println(cardBalance-billTotal+"Visit again!");
-		}
-	}
+
+    void payCard(int billTotal) {
+        double amount = 0;
+        double cardBalance = 50000;
+        System.out.println("Enter valid details of your credit card:-");
+        System.out.println("Enter Your card number:");
+        int cardNo = sc.nextInt();
+        int cardPin = 1000;
+        do {
+            System.out.println("Enter Your 4 digit PIN:");
+            // int cardPin = sc.nextInt();
+        } while (cardPin > 999 && cardPin <= 1000);
+
+        if (cardBalance >= billTotal) {
+            System.out.println(cardBalance - billTotal + "Visit again!");
+        }
+    }
 }
 
 class Manager {
