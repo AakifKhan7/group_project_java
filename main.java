@@ -120,27 +120,28 @@ class Menu {
         System.out.println(
                 "In Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
         System.out.println("Here’s a list of popular vegetable-based dishes");
-        String menu = "1. Paneer Butter Masala - 250\n" +
-                "2. Aloo Gobi (Potato & Cauliflower Curry) - 200\n" +
-                "3. Baingan Bharta (Roasted Eggplant Curry) - 220\n" +
-                "4. Palak Paneer (Spinach with Cottage Cheese) - 240\n" +
-                "5. Chana Masala (Chickpea Curry) - 210\n" +
-                "6. Veg Biryani - 300\n" +
-                "7. Dum Aloo (Potato Curry) - 230\n" +
-                "8. Bhindi Masala (Okra Curry) - 200\n" +
-                "9. Mixed Vegetable Curry - 250\n" +
-                "10. Matar Paneer (Peas and Cottage Cheese Curry) - 260\n\n" +
-                // "### **International Vegetable Dishes**\n" +
-                "11. Ratatouille (French Vegetable Stew) - 280\n" +
-                "12. Veggie Stir-Fry (Asian Style) - 320\n" +
-                "13. Stuffed Bell Peppers (Mediterranean Style) - 300\n" +
-                "14. Grilled Vegetable Skewers - 270\n" +
-                "15. Vegetable Lasagna - 350\n" +
-                "16. Thai Green Curry with Vegetables - 290\n" +
-                "17. Cream of Mushroom Soup - 180\n" +
-                "18. Veggie Tacos (Mexican Style) - 250\n" +
-                "19. Veggie Sushi Rolls - 220\n" +
-                "20. Greek Salad - 200\n\n";
+        String menu = "1.   Paneer Butter Masala                          - 250\n" +
+                "2.   Aloo Gobi (Potato & Cauliflower)             - 200\n" +
+                "3.   Baingan Bharta (Roasted Eggplant)            - 220\n" +
+                "4.   Palak Paneer (Spinach & Cottage Cheese)      - 240\n" +
+                "5.   Chana Masala (Chickpea Curry)                - 210\n" +
+                "6.   Veg Biryani                                  - 300\n" +
+                "7.   Dum Aloo (Potato Curry)                      - 230\n" +
+                "8.   Bhindi Masala (Okra Curry)                   - 200\n" +
+                "9.   Mixed Vegetable Curry                        - 250\n" +
+                "10.  Matar Paneer (Peas & Cottage Cheese)        - 260\n\n" +
+                // "### International Vegetarian Dishes\n" +
+                "11.  Ratatouille (French Vegetable Stew)         - 280\n" +
+                "12.  Veggie Stir-Fry (Asian Style)               - 320\n" +
+                "13.  Stuffed Bell Peppers (Mediterranean)        - 300\n" +
+                "14.  Grilled Vegetable Skewers                   - 270\n" +
+                "15.  Vegetable Lasagna                           - 350\n" +
+                "16.  Thai Green Curry with Vegetables            - 290\n" +
+                "17.  Cream of Mushroom Soup                      - 180\n" +
+                "18.  Veggie Tacos (Mexican Style)                - 250\n" +
+                "19.  Veggie Sushi Rolls                          - 220\n" +
+                "20.  Greek Salad                                 - 200\n";
+        ;
         // "### **Snacks and Starters**\n";
 
         vegMenu = menu.split("\n");
@@ -161,7 +162,8 @@ class Menu {
         }
 
         for (int i = 0; i < vegMenu.length - 1; i++) {
-            System.out.println(vegMenu[i] + " " + vegPrice[i] + "INR");
+            System.out.printf("%-45s %5d INR\n", vegMenu[i], vegPrice[i]);
+            // System.out.println(vegMenu[i] + " " + vegPrice[i] + " INR");
         }
     }
 
@@ -171,26 +173,26 @@ class Menu {
                 "In Non-Vegetarian we have more than 100 dishes, kindly choose your favourite from the given list......");
         System.out.println("Here’s a list of popular Non-vegetable-based dishes");
 
-        String menu = "1. Butter Chicken - 350\n" +
-                "2. Chicken Tikka Masala - 320\n" +
-                "3. Rogan Josh (Red Lamb) - 400\n" +
-                "4. Chicken Do Pyaza - 310\n" +
-                "5. Chicken Chettinad - 330\n" +
-                "6. Malai Kofta - 280\n" +
-                "7. Mutton Korma - 420\n" +
-                "8. Goan Fish Curry - 370\n" +
-                "9. Amritsari Fish - 360\n" +
-                "10. Chicken Biryani - 380\n\n" +
-                "11. Spaghetti and Meatballs - 340\n" +
-                "12. Beef Stroganoff - 410\n" +
-                "13. Chicken Parmesan - 360\n" +
-                "14. Chicken Alfredo - 350\n" +
-                "15. Chicken Quesadillas - 300\n" +
-                "16. Chicken Fried Rice - 280\n" +
-                "17. Chicken Fajitas - 310\n" +
-                "18. Chicken Enchiladas - 320\n" +
-                "19. Beef Tacos - 290\n" +
-                "20. Beef Wellington - 450\n";
+        String menu = "1.   Butter Chicken                           - 350\n" +
+                "2.   Chicken Tikka Masala                    - 320\n" +
+                "3.   Rogan Josh (Red Lamb)                    - 400\n" +
+                "4.   Chicken Do Pyaza                        - 310\n" +
+                "5.   Chicken Chettinad                       - 330\n" +
+                "6.   Malai Kofta                             - 280\n" +
+                "7.   Mutton Korma                            - 420\n" +
+                "8.   Goan Fish Curry                         - 370\n" +
+                "9.   Amritsari Fish                          - 360\n" +
+                "10.  Chicken Biryani                         - 380\n\n" +
+                "11.  Spaghetti and Meatballs                 - 340\n" +
+                "12.  Beef Stroganoff                         - 410\n" +
+                "13.  Chicken Parmesan                        - 360\n" +
+                "14.  Chicken Alfredo                         - 350\n" +
+                "15.  Chicken Quesadillas                     - 300\n" +
+                "16.  Chicken Fried Rice                      - 280\n" +
+                "17.  Chicken Fajitas                         - 310\n" +
+                "18.  Chicken Enchiladas                      - 320\n" +
+                "19.  Beef Tacos                              - 290\n" +
+                "20.  Beef Wellington                         - 450\n";
 
         nonVegMenu = menu.split("\n");
 
@@ -209,7 +211,8 @@ class Menu {
         }
 
         for (int i = 0; i < nonVegMenu.length - 1; i++) {
-            System.out.println(nonVegMenu[i] + " " + nonVegPrice[i] + "INR");
+            System.out.printf("%-45s %5d INR\n", nonVegMenu[i], nonVegPrice[i]);
+            // System.out.println(nonVegMenu[i] + " " + nonVegPrice[i] + "INR");
         }
     }
 
