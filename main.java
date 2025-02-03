@@ -36,6 +36,7 @@ class Customer {
     }
 
     void selectFood() {
+        String food_type = "";
 
         System.out.println("Choose number for given type of food\n\t1.vegetarian\n2.Non-Vegetarian ");
         int choiceFood = sc.nextInt();
@@ -43,8 +44,10 @@ class Customer {
         System.out.println("Choose your Food from given menu");
         if (choiceFood == 1) {
             Menu.vegetarianFood();
+            food_type = "vegetarian";
         } else if (choiceFood == 2) {
             Menu.nonVegetarian();
+            food_type = "non-vegetarian";
         } else {
             System.out.println("Invalid choice");
             return;
@@ -60,12 +63,12 @@ class Customer {
                 selectedFood[itemCount] = selectedDish;
             } else {
                 System.out.println("Invalid dish number, please try again.");
-                itemCount--; // Decrement to retry for this item
+                itemCount--;
             }
         }
 
         Bill bill = new Bill();
-        bill.calculateBill(selectedFood);
+        bill.calculateBill(food_type, selectedFood);
     }
 
     void payment() {
@@ -104,7 +107,7 @@ class Customer {
 
 class Menu {
 
-   static  int sizeOfVegPrice = 20;
+    static int sizeOfVegPrice = 20;
     static String[] vegMenu = new String[sizeOfVegPrice];
     static int[] vegPrice = new int[sizeOfVegPrice];
 
@@ -165,53 +168,70 @@ class Menu {
     static void nonVegetarian() {
         System.out.println("You chose Non-Vegetarian food:-");
         System.out.println(
-                "In Non-Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
+                "In Non-Vegetarian we have more than 100 dishes, kindly choose your favourite from the given list......");
         System.out.println("Here’s a list of popular Non-vegetable-based dishes");
-        String menu = "### **Indian Non-Vegetarian Dishes**\n" +
-                "1. Butter Chicken\n" +
-                "2. Chicken Tikka Masala\n" +
-                "3. Rogan Josh (Red Lamb)\n" +
-                "4. Chicken Do Pyaza\n" +
-                "5. Chicken Chettinad\n" +
-                "6. Malai Kofta\n" +
-                "7. Mutton Korma\n" +
-                "8. Goan Fish Curry\n" +
-                "9. Amritsari Fish\n" +
-                "10. Chicken Biryani\n\n" +
-                "### **International Non-Vegetarian Dishes**\n" +
-                "11. Spaghetti and Meatballs\n" +
-                "12. Beef Stroganoff\n" +
-                "13. Chicken Parmesan\n" +
-                "14. Chicken Alfredo\n" +
-                "15. Chicken Quesadillas\n" +
-                "16. Chicken Fried Rice\n" +
-                "17. Chicken Fajitas\n" +
-                "18. Chicken Enchiladas\n" +
-                "19. Beef Tacos\n" +
-                "20. Beef Wellington\n\n" +
-                "### **Snacks and Starters**\n";
+
+        String menu = "1. Butter Chicken - 350\n" +
+                "2. Chicken Tikka Masala - 320\n" +
+                "3. Rogan Josh (Red Lamb) - 400\n" +
+                "4. Chicken Do Pyaza - 310\n" +
+                "5. Chicken Chettinad - 330\n" +
+                "6. Malai Kofta - 280\n" +
+                "7. Mutton Korma - 420\n" +
+                "8. Goan Fish Curry - 370\n" +
+                "9. Amritsari Fish - 360\n" +
+                "10. Chicken Biryani - 380\n\n" +
+                "11. Spaghetti and Meatballs - 340\n" +
+                "12. Beef Stroganoff - 410\n" +
+                "13. Chicken Parmesan - 360\n" +
+                "14. Chicken Alfredo - 350\n" +
+                "15. Chicken Quesadillas - 300\n" +
+                "16. Chicken Fried Rice - 280\n" +
+                "17. Chicken Fajitas - 310\n" +
+                "18. Chicken Enchiladas - 320\n" +
+                "19. Beef Tacos - 290\n" +
+                "20. Beef Wellington - 450\n";
 
         nonVegMenu = menu.split("\n");
 
-        // print menu
-        for (String item : nonVegMenu) {
-            System.out.println(item);
+        String[] nonVegMenuItems = menu.split("\n");
+
+        int index = 0;
+        for (String item : nonVegMenuItems) {
+            if (item.contains("-")) {
+                String[] parts = item.split(" - ");
+                if (parts.length == 2) {
+                    nonVegMenu[index] = parts[0].trim();
+                    nonVegPrice[index] = Integer.parseInt(parts[1].trim());
+                    index++;
+                }
+            }
+        }
+
+        for (int i = 0; i < nonVegMenu.length - 1; i++) {
+            System.out.println(nonVegMenu[i] + " " + nonVegPrice[i] + "INR");
         }
     }
+
 }
 
-class Bill{
+class Bill {
     // Menu menu = new Menu();
     String[] item = Menu.vegMenu;
     int[] price = Menu.vegPrice;
 
-    void calculateBill(int[] selectedFood) {
+    void calculateBill(String food_type, int[] selectedFood) {
         int billTotal = 0;
         for (int i = 0; i < selectedFood.length; i++) {
             int dishIndex = selectedFood[i] - 1;
             if (dishIndex >= 0 && dishIndex < Menu.vegMenu.length) {
-                System.out.println(Menu.vegMenu[dishIndex] + " - Rs." + Menu.vegPrice[dishIndex]);
-                billTotal += Menu.vegPrice[dishIndex];
+                if (food_type == "vegetarian") {
+                    System.out.println(Menu.vegMenu[dishIndex] + " - Rs." + Menu.vegPrice[dishIndex]);
+                    billTotal += Menu.vegPrice[dishIndex];
+                } else {
+                    System.out.println(Menu.nonVegMenu[dishIndex] + " - Rs." + Menu.nonVegPrice[dishIndex]);
+                    billTotal += Menu.nonVegPrice[dishIndex];
+                }
             } else {
                 System.out.println("Invalid dish selected.");
             }
