@@ -12,6 +12,7 @@ class Restaurant {
         switch (choice) {
             case 1:
                 System.out.println("Manager");
+                Manager manager = new Manager();
                 break;
             case 2:
                 Customer customer = new Customer();
@@ -38,7 +39,7 @@ class Customer {
     void selectFood() {
         String food_type = "";
 
-        System.out.println("Choose number for given type of food\n\t1.vegetarian\n2.Non-Vegetarian ");
+        System.out.println("Choose number for given type of food\n1.vegetarian\n2.Non-Vegetarian ");
         int choiceFood = sc.nextInt();
 
         System.out.println("Choose your Food from given menu");
@@ -53,7 +54,7 @@ class Customer {
             return;
         }
 
-        System.out.println("How many items you want to order?");
+        System.out.print("How many items you want to order?: ");
         int numberOfItems = sc.nextInt();
         int[] selectedFood = new int[numberOfItems];
         for (int itemCount = 0; itemCount < numberOfItems; itemCount++) {
@@ -68,10 +69,17 @@ class Customer {
         }
 
         Bill bill = new Bill();
-        bill.calculateBill(food_type, selectedFood);
-    }
+        double billTotal = bill.calculateBill(food_type, selectedFood);
 
-    void payment() {
+        System.out.println();
+        payment(billTotal);
+
+
+        // payment.makePayment(billTotal);
+    }
+    Payment payment = new Payment();
+
+    void payment(double billTotal) {
         System.out.println("Choose your payment method");
         String methodToPay = " 1. Credit Card\n 2. Debit Card\n 3. Net Banking\n 4. UPI\n 5. Cash";
         System.out.println(methodToPay);
@@ -80,19 +88,24 @@ class Customer {
         switch (choice) {
             case 1:
                 System.out.println("Credit Card");
+                payment.payCreditCard(billTotal);
 
                 break;
             case 2:
                 System.out.println("Debit Card");
+                payment.payDebitCard(billTotal);
                 break;
             case 3:
                 System.out.println("Net Banking");
+                payment.payNetBanking(billTotal);
                 break;
             case 4:
                 System.out.println("UPI");
+                payment.payUPI(billTotal);
                 break;
             case 5:
                 System.out.println("Cash");
+                payment.payCash(billTotal);
                 break;
             default:
                 System.out.println("Invalid choice");
@@ -223,7 +236,7 @@ class Bill {
     String[] item = Menu.vegMenu;
     int[] price = Menu.vegPrice;
 
-    void calculateBill(String food_type, int[] selectedFood) {
+    double calculateBill(String food_type, int[] selectedFood) {
         int billTotal = 0;
         for (int i = 0; i < selectedFood.length; i++) {
             int dishIndex = selectedFood[i] - 1;
@@ -241,41 +254,137 @@ class Bill {
 
         }
         System.out.println("Your total bill is: " + billTotal);
+        return billTotal;
     }
 }
 
 class Payment {
     Scanner sc = new Scanner(System.in);
+    double cardBalance = 50000;
+    double netBankingBalance = 60000;
+    double upiBalance = 30000; 
 
-    void payCash(int billTotal) {
-        double amount = 0;
-        do {
-            System.out.println("Enter amount");
-            amount = sc.nextDouble();
-        } while (amount < billTotal);
-
-        if (amount >= billTotal) {
-            System.out.println(amount - billTotal + "You get return");
-        }
-
+    boolean isValidCardNumber(long cardNo) {
+        return String.valueOf(cardNo).length() == 16;
     }
 
-    void payCard(int billTotal) {
-        double amount = 0;
-        double cardBalance = 50000;
-        System.out.println("Enter valid details of your credit card:-");
-        System.out.println("Enter Your card number:");
-        int cardNo = sc.nextInt();
-        int cardPin = 1000;
+    boolean isValidPIN(int pin) {
+        return String.valueOf(pin).length() == 4;
+    }
+
+    void payCreditCard(double billTotal) {
+        System.out.println("Enter valid details of your Credit Card:");
+        
+        long cardNo;
         do {
-            System.out.println("Enter Your 4 digit PIN:");
-            // int cardPin = sc.nextInt();
-        } while (cardPin > 999 && cardPin <= 1000);
+            System.out.print("Enter your 16-digit card number: ");
+            cardNo = sc.nextLong();
+            if (!isValidCardNumber(cardNo)) {
+                System.out.println("Invalid card number! Please enter a 16-digit number.");
+            }
+        } while (!isValidCardNumber(cardNo));
+
+        int cardPin;
+        do {
+            System.out.print("Enter your 4-digit PIN: ");
+            cardPin = sc.nextInt();
+            if (!isValidPIN(cardPin)) {
+                System.out.println("Invalid PIN! Please enter a 4-digit PIN.");
+            }
+        } while (!isValidPIN(cardPin));
 
         if (cardBalance >= billTotal) {
-            System.out.println(cardBalance - billTotal + "Visit again!");
+            cardBalance -= billTotal;
+            System.out.println("Payment successful! Remaining Balance: ₹" + cardBalance);
+        } else {
+            System.out.println("Insufficient balance!");
         }
     }
+
+    void payDebitCard(double billTotal) {
+        System.out.println("Enter valid details of your Debit Card:");
+
+        long cardNo;
+        do {
+            System.out.print("Enter your 16-digit card number: ");
+            cardNo = sc.nextLong();
+            if (!isValidCardNumber(cardNo)) {
+                System.out.println("Invalid card number! Please enter a 16-digit number.");
+            }
+        } while (!isValidCardNumber(cardNo));
+
+        int cardPin;
+        do {
+            System.out.print("Enter your 4-digit PIN: ");
+            cardPin = sc.nextInt();
+            if (!isValidPIN(cardPin)) {
+                System.out.println("Invalid PIN! Please enter a 4-digit PIN.");
+            }
+        } while (!isValidPIN(cardPin));
+
+        if (cardBalance >= billTotal) {
+            cardBalance -= billTotal;
+            System.out.println("Payment successful! Remaining Balance: ₹" + cardBalance);
+        } else {
+            System.out.println("Insufficient balance!");
+        }
+    }
+
+    void payNetBanking(double billTotal) {
+        System.out.println("Enter your Net Banking credentials:");
+        System.out.print("Enter User ID: ");
+        String userId = sc.next();
+        System.out.print("Enter Password: ");
+        String password = sc.next();
+
+        if (netBankingBalance >= billTotal) {
+            netBankingBalance -= billTotal;
+            System.out.println("Payment successful! Remaining Balance: ₹" + netBankingBalance);
+        } else {
+            System.out.println("Insufficient balance!");
+        }
+    }
+
+    void payUPI(double billTotal) {
+        System.out.println("Enter your UPI ID (e.g., yourname@upi):");
+        String upiId;
+        do {
+            upiId = sc.next();
+            if (!upiId.matches("^[a-zA-Z0-9]+@[a-zA-Z]+$")) {
+                System.out.println("Invalid UPI ID! Please enter in the correct format (e.g., yourname@upi).");
+            }
+        } while (!upiId.matches("^[a-zA-Z0-9]+@[a-zA-Z]+$"));
+
+        System.out.print("Enter your 4-digit UPI PIN: ");
+        int upiPin;
+        do {
+            upiPin = sc.nextInt();
+            if (!isValidPIN(upiPin)) {
+                System.out.println("Invalid PIN! Please enter a 4-digit PIN.");
+            }
+        } while (!isValidPIN(upiPin));
+
+        if (upiBalance >= billTotal) {
+            upiBalance -= billTotal;
+            System.out.println("Payment successful! Remaining Balance: ₹" + upiBalance);
+        } else {
+            System.out.println("Insufficient balance!");
+        }
+    }
+
+    void payCash(double billTotal) {
+        double amount;
+        do {
+            System.out.println("Enter cash amount:");
+            amount = sc.nextDouble();
+            if (amount < billTotal) {
+                System.out.println("Insufficient amount! Please enter at least ₹" + billTotal);
+            }
+        } while (amount < billTotal);
+
+        System.out.println("Payment successful! Change returned: ₹" + (amount - billTotal));
+    }
+
 }
 
 class Manager {
