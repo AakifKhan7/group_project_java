@@ -407,6 +407,17 @@ class Payment {
 
 class Manager {
     Scanner sc = new Scanner(System.in);
+    String password = "Admin123";
+    Manager(){
+        System.out.println("Enter password to access management:");
+        String enteredPassword = sc.nextLine();
+        if (!enteredPassword.equals(password)) {
+            System.out.println("Incorrect password! Access denied.");
+            Restaurant.main(null);
+        }
+        System.out.println("Access granted!");
+        System.out.println("\nWelcome Manager");
+    }
 
     void management() {
         System.out.println("1. Add Food");
