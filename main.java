@@ -2,6 +2,7 @@ import java.util.*;
 
 class Restaurant {
     public static void main(String[] args) {
+        Menu menu = new Menu();
         Scanner sc = new Scanner(System.in);
         System.out.println("1. Manager");
         System.out.println("2. Customer");
@@ -13,6 +14,8 @@ class Restaurant {
             case 1:
                 System.out.println("Manager");
                 Manager manager = new Manager();
+                manager.management();
+
                 break;
             case 2:
                 Customer customer = new Customer();
@@ -30,7 +33,7 @@ class Restaurant {
 
 class Customer {
     Scanner sc = new Scanner(System.in);
-    // Menu menu = new Menu();
+    Menu menu = new Menu();
 
     Customer() {
         System.out.println("Welcome to virtual restaurant");
@@ -44,10 +47,10 @@ class Customer {
 
         System.out.println("Choose your Food from given menu");
         if (choiceFood == 1) {
-            Menu.vegetarianFood();
+            Menu.printVegMenu();
             food_type = "vegetarian";
         } else if (choiceFood == 2) {
-            Menu.nonVegetarian();
+            Menu.printNonVegMenu();
             food_type = "non-vegetarian";
         } else {
             System.out.println("Invalid choice");
@@ -74,9 +77,9 @@ class Customer {
         System.out.println();
         payment(billTotal);
 
-
         // payment.makePayment(billTotal);
     }
+
     Payment payment = new Payment();
 
     void payment(double billTotal) {
@@ -128,32 +131,43 @@ class Menu {
     static String[] nonVegMenu = new String[sizeOfNonVegPrice];
     static int[] nonVegPrice = new int[sizeOfNonVegPrice];
 
+    static boolean isInitialized = false;
+
+    Menu() {
+        if (!isInitialized) {
+            vegetarianFood();
+            nonVegetarian();
+            isInitialized = true;
+        }
+    }
+
     static void vegetarianFood() {
-        System.out.println("You chose Vegetarian food:-");
-        System.out.println(
-                "In Vegetarian we have more than 100 dishes,kindly chose your favourite from given list......");
-        System.out.println("Here’s a list of popular vegetable-based dishes");
-        String menu = "1.   Paneer Butter Masala                          - 250\n" +
-                "2.   Aloo Gobi (Potato & Cauliflower)             - 200\n" +
-                "3.   Baingan Bharta (Roasted Eggplant)            - 220\n" +
-                "4.   Palak Paneer (Spinach & Cottage Cheese)      - 240\n" +
-                "5.   Chana Masala (Chickpea Curry)                - 210\n" +
-                "6.   Veg Biryani                                  - 300\n" +
-                "7.   Dum Aloo (Potato Curry)                      - 230\n" +
-                "8.   Bhindi Masala (Okra Curry)                   - 200\n" +
-                "9.   Mixed Vegetable Curry                        - 250\n" +
-                "10.  Matar Paneer (Peas & Cottage Cheese)        - 260\n\n" +
-                // "### International Vegetarian Dishes\n" +
-                "11.  Ratatouille (French Vegetable Stew)         - 280\n" +
-                "12.  Veggie Stir-Fry (Asian Style)               - 320\n" +
-                "13.  Stuffed Bell Peppers (Mediterranean)        - 300\n" +
-                "14.  Grilled Vegetable Skewers                   - 270\n" +
-                "15.  Vegetable Lasagna                           - 350\n" +
-                "16.  Thai Green Curry with Vegetables            - 290\n" +
-                "17.  Cream of Mushroom Soup                      - 180\n" +
-                "18.  Veggie Tacos (Mexican Style)                - 250\n" +
-                "19.  Veggie Sushi Rolls                          - 220\n" +
-                "20.  Greek Salad                                 - 200\n";
+        // System.out.println("You chose Vegetarian food:-");
+        // System.out.println(
+        // "In Vegetarian we have more than 100 dishes,kindly chose your favourite from
+        // given list......");
+        // System.out.println("Here’s a list of popular vegetable-based dishes");
+        String menu = "Paneer Butter Masala                          - 250\n" +
+                "Aloo Gobi (Potato & Cauliflower)             - 200\n" +
+                "Baingan Bharta (Roasted Eggplant)            - 220\n" +
+                "Palak Paneer (Spinach & Cottage Cheese)      - 240\n" +
+                "Chana Masala (Chickpea Curry)                - 210\n" +
+                "Veg Biryani                                  - 300\n" +
+                "Dum Aloo (Potato Curry)                      - 230\n" +
+                "Bhindi Masala (Okra Curry)                   - 200\n" +
+                "Mixed Vegetable Curry                        - 250\n" +
+                "Matar Paneer (Peas & Cottage Cheese)        - 260\n\n" +
+                // /# International Vegetarian Dishes\n" +
+                "Ratatouille (French Vegetable Stew)         - 280\n" +
+                "Veggie Stir-Fry (Asian Style)               - 320\n" +
+                "Stuffed Bell Peppers (Mediterranean)        - 300\n" +
+                "Grilled Vegetable Skewers                   - 270\n" +
+                "Vegetable Lasagna                           - 350\n" +
+                "Thai Green Curry with Vegetables            - 290\n" +
+                "Cream of Mushroom Soup                      - 180\n" +
+                "Veggie Tacos (Mexican Style)                - 250\n" +
+                "Veggie Sushi Rolls                          - 220\n" +
+                "Greek Salad                                 - 200\n";
         ;
         // "### **Snacks and Starters**\n";
 
@@ -174,38 +188,39 @@ class Menu {
             }
         }
 
-        for (int i = 0; i < vegMenu.length - 1; i++) {
-            System.out.printf("%-45s %5d INR\n", vegMenu[i], vegPrice[i]);
+    }
+
+    static void printVegMenu() {
+        
+        for (int i = 0; i < sizeOfVegPrice; i++) {
+            System.out.printf("%-5d %-45s %5d INR\n", i + 1, vegMenu[i], vegPrice[i]);
             // System.out.println(vegMenu[i] + " " + vegPrice[i] + " INR");
         }
     }
 
     static void nonVegetarian() {
-        System.out.println("You chose Non-Vegetarian food:-");
-        System.out.println(
-                "In Non-Vegetarian we have more than 100 dishes, kindly choose your favourite from the given list......");
-        System.out.println("Here’s a list of popular Non-vegetable-based dishes");
+        
 
-        String menu = "1.   Butter Chicken                           - 350\n" +
-                "2.   Chicken Tikka Masala                    - 320\n" +
-                "3.   Rogan Josh (Red Lamb)                    - 400\n" +
-                "4.   Chicken Do Pyaza                        - 310\n" +
-                "5.   Chicken Chettinad                       - 330\n" +
-                "6.   Malai Kofta                             - 280\n" +
-                "7.   Mutton Korma                            - 420\n" +
-                "8.   Goan Fish Curry                         - 370\n" +
-                "9.   Amritsari Fish                          - 360\n" +
-                "10.  Chicken Biryani                         - 380\n\n" +
-                "11.  Spaghetti and Meatballs                 - 340\n" +
-                "12.  Beef Stroganoff                         - 410\n" +
-                "13.  Chicken Parmesan                        - 360\n" +
-                "14.  Chicken Alfredo                         - 350\n" +
-                "15.  Chicken Quesadillas                     - 300\n" +
-                "16.  Chicken Fried Rice                      - 280\n" +
-                "17.  Chicken Fajitas                         - 310\n" +
-                "18.  Chicken Enchiladas                      - 320\n" +
-                "19.  Beef Tacos                              - 290\n" +
-                "20.  Beef Wellington                         - 450\n";
+        String menu = "Butter Chicken                           - 350\n" +
+                "Chicken Tikka Masala                    - 320\n" +
+                "Rogan Josh (Red Lamb)                    - 400\n" +
+                "Chicken Do Pyaza                        - 310\n" +
+                "Chicken Chettinad                       - 330\n" +
+                "Malai Kofta                             - 280\n" +
+                "Mutton Korma                            - 420\n" +
+                "Goan Fish Curry                         - 370\n" +
+                "Amritsari Fish                          - 360\n" +
+                "Chicken Biryani                         - 380\n\n" +
+                "Spaghetti and Meatballs                 - 340\n" +
+                "Beef Stroganoff                         - 410\n" +
+                "Chicken Parmesan                        - 360\n" +
+                "Chicken Alfredo                         - 350\n" +
+                "Chicken Quesadillas                     - 300\n" +
+                "Chicken Fried Rice                      - 280\n" +
+                "Chicken Fajitas                         - 310\n" +
+                "Chicken Enchiladas                      - 320\n" +
+                "Beef Tacos                              - 290\n" +
+                "Beef Wellington                         - 450\n";
 
         nonVegMenu = menu.split("\n");
 
@@ -223,7 +238,10 @@ class Menu {
             }
         }
 
-        for (int i = 0; i < nonVegMenu.length - 1; i++) {
+    }
+
+    static void printNonVegMenu() {
+        for (int i = 0; i < nonVegMenu.length; i++) {
             System.out.printf("%-45s %5d INR\n", nonVegMenu[i], nonVegPrice[i]);
             // System.out.println(nonVegMenu[i] + " " + nonVegPrice[i] + "INR");
         }
@@ -262,7 +280,7 @@ class Payment {
     Scanner sc = new Scanner(System.in);
     double cardBalance = 50000;
     double netBankingBalance = 60000;
-    double upiBalance = 30000; 
+    double upiBalance = 30000;
 
     boolean isValidCardNumber(long cardNo) {
         return String.valueOf(cardNo).length() == 16;
@@ -274,7 +292,7 @@ class Payment {
 
     void payCreditCard(double billTotal) {
         System.out.println("Enter valid details of your Credit Card:");
-        
+
         long cardNo;
         do {
             System.out.print("Enter your 16-digit card number: ");
@@ -397,21 +415,138 @@ class Manager {
         System.out.println("4. Exit");
         System.out.print("Enter your choice: ");
         int choice = sc.nextInt();
+
         switch (choice) {
             case 1:
                 System.out.println("Add Food");
+                addFood();
                 break;
             case 2:
                 System.out.println("Remove Food");
+                removeFood();
                 break;
             case 3:
                 System.out.println("Update Food");
+                updateFood();
                 break;
             case 4:
                 System.out.println("Exit");
+                Restaurant.main(null);
                 break;
             default:
                 System.out.println("Invalid choice");
         }
+
+    }
+
+    void addFood() {
+        System.out.print("Enter food type (1. Vegetarian, 2. Non-Vegetarian): ");
+        int foodType = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        System.out.print("Enter food name: ");
+        String foodName = sc.nextLine();
+
+        System.out.print("Enter price: ");
+        int price = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        if (foodType == 1) {
+            Menu.sizeOfVegPrice++;
+            Menu.vegMenu = Arrays.copyOf(Menu.vegMenu, Menu.sizeOfVegPrice);
+            Menu.vegPrice = Arrays.copyOf(Menu.vegPrice, Menu.sizeOfVegPrice);
+            Menu.vegMenu[Menu.sizeOfVegPrice - 1] = foodName;
+            Menu.vegPrice[Menu.sizeOfVegPrice - 1] = price;
+            management();
+            // Menu.printVegMenu();
+            return;
+
+        } else if (foodType == 2) {
+            Menu.sizeOfNonVegPrice++;
+            Menu.nonVegMenu = Arrays.copyOf(Menu.nonVegMenu, Menu.sizeOfNonVegPrice);
+            Menu.nonVegPrice = Arrays.copyOf(Menu.nonVegPrice, Menu.sizeOfNonVegPrice);
+            Menu.nonVegMenu[Menu.sizeOfNonVegPrice - 1] = foodName;
+            Menu.nonVegPrice[Menu.sizeOfNonVegPrice - 1] = price;
+            management();
+            return;
+
+        } else {
+            System.out.println("Invalid choice");
+        }
+    }
+
+    void removeFood() {
+        System.out.print("Enter food type (1. Vegetarian, 2. Non-Vegetarian): ");
+        int foodType = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        System.out.print("Enter food number from menu to remove: ");
+        int foodIndex = sc.nextInt() - 2;
+
+        if (foodType == 1) {
+            for (int i = 0; i < Menu.sizeOfVegPrice; i++) {
+                if (Menu.vegMenu[i] != null && foodIndex == i) {
+                    for (int j = i; j < Menu.sizeOfVegPrice - 1; j++) {
+                        Menu.vegMenu[j] = Menu.vegMenu[j + 1];
+                        Menu.vegPrice[j] = Menu.vegPrice[j + 1];
+                    }
+                    Menu.sizeOfVegPrice--;
+                    Menu.vegMenu = Arrays.copyOf(Menu.vegMenu, Menu.sizeOfVegPrice);
+                    Menu.vegPrice = Arrays.copyOf(Menu.vegPrice, Menu.sizeOfVegPrice);
+                    System.out.println(Menu.vegMenu[i] + " removed from the menu.");
+                    management();
+                    return;
+                }
+            }
+        } else if (foodType == 2) {
+            for (int i = 0; i < Menu.sizeOfNonVegPrice; i++) {
+                if (Menu.nonVegMenu[i] != null && foodIndex == i) {
+                    for (int j = i; j < Menu.sizeOfNonVegPrice - 1; j++) {
+                        Menu.nonVegMenu[j] = Menu.nonVegMenu[j + 1];
+                        Menu.nonVegPrice[j] = Menu.nonVegPrice[j + 1];
+                    }
+                    Menu.sizeOfNonVegPrice--;
+                    Menu.nonVegMenu = Arrays.copyOf(Menu.nonVegMenu, Menu.sizeOfNonVegPrice);
+                    Menu.nonVegPrice = Arrays.copyOf(Menu.nonVegPrice, Menu.sizeOfNonVegPrice);
+                    System.out.println(Menu.nonVegMenu[i] + " removed from the menu.");
+                    management();
+                    return;
+                }
+            }
+        }
+        System.out.println("Item not found in the menu.");
+
+    }
+
+    void updateFood() {
+        System.out.print("Enter food type (1. Vegetarian, 2. Non-Vegetarian): ");
+        int foodType = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        System.out.print("Enter item number from menu to update: ");
+        int foodIndex = sc.nextInt() - 2;
+
+        System.out.print("Enter new price: ");
+        int newPrice = sc.nextInt();
+        sc.nextLine(); // Consume newline
+
+        if (foodType == 1) {
+            for (int i = 0; i < Menu.sizeOfVegPrice; i++) {
+                if (Menu.vegMenu[i] != null && foodIndex == i) {
+                    Menu.vegPrice[i] = newPrice;
+                    System.out.println(Menu.vegMenu[i] + " price updated to " + newPrice + " INR.");
+                    return;
+                }
+            }
+        } else if (foodType == 2) {
+            for (int i = 0; i < Menu.sizeOfNonVegPrice; i++) {
+                if (Menu.nonVegMenu[i] != null && foodIndex == i) {
+                    Menu.nonVegPrice[i] = newPrice;
+                    System.out.println(Menu.nonVegMenu[i] + " price updated to " + newPrice + " INR.");
+                    return;
+                }
+            }
+        }
+        System.out.println("Item not found in the menu.");
     }
 }
