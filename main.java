@@ -34,7 +34,6 @@ class Restaurant {
 class Customer {
     Scanner sc = new Scanner(System.in);
     Menu menu = new Menu();
-    
 
     Customer() {
         System.out.println("Welcome to virtual restaurant");
@@ -118,11 +117,25 @@ class Customer {
     }
 
     void feedback() {
-        System.out.println("please give star rating to our service");
-        int rating = sc.nextInt();
+        int rating = 0;
+        do {
+            System.out.println("please give star rating to our service");
+            rating = sc.nextInt();
+        } while (rating < 1 || rating > 5);
+        sc.nextLine();
 
         System.out.println("Please provide your feedback:");
         String feedback = sc.nextLine();
+
+        FeedBack feedBack = new FeedBack();
+        for (int i = 0; i < feedBack.starRating.length; i++) {
+            if (feedBack.starRating[i] == 0) {
+                feedBack.starRating[i] = rating;
+                feedBack.feedback[i] = feedback;
+                break;
+            }
+        }
+
         System.out.println("Thank you for your feedback!");
     }
 }
@@ -197,7 +210,7 @@ class Menu {
     }
 
     static void printVegMenu() {
-        
+
         for (int i = 0; i < sizeOfVegPrice; i++) {
             System.out.printf("%-5d %-45s %5d INR\n", i + 1, vegMenu[i], vegPrice[i]);
             // System.out.println(vegMenu[i] + " " + vegPrice[i] + " INR");
@@ -205,7 +218,6 @@ class Menu {
     }
 
     static void nonVegetarian() {
-        
 
         String menu = "Butter Chicken                           - 350\n" +
                 "Chicken Tikka Masala                    - 320\n" +
@@ -280,6 +292,12 @@ class Bill {
         System.out.println("Your total bill is: " + billTotal);
         return billTotal;
     }
+}
+
+class FeedBack {
+    int[] starRating = new int[50];
+    String[] feedback = new String[50];
+
 }
 
 class Payment {
@@ -414,7 +432,8 @@ class Payment {
 class Manager {
     Scanner sc = new Scanner(System.in);
     String password = "Admin123";
-    Manager(){
+
+    Manager() {
         System.out.println("Enter password to access management:");
         String enteredPassword = sc.nextLine();
         if (!enteredPassword.equals(password)) {
@@ -454,6 +473,17 @@ class Manager {
                 System.out.println("Invalid choice");
         }
 
+    }
+
+    void getFeedback(){
+        FeedBack feedBack = new FeedBack();
+        for (int i = 0; i < feedBack.starRating.length; i++) {
+            if (feedBack.starRating[i] != 0) {
+                System.out.println("Rating: " + feedBack.starRating[i]);
+                System.out.println("Feedback: " + feedBack.feedback[i]);
+                System.out.println();
+            }
+        }
     }
 
     void addFood() {
