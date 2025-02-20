@@ -446,7 +446,8 @@ class Manager {
         System.out.println("1. Add Food");
         System.out.println("2. Remove Food");
         System.out.println("3. Update Food");
-        System.out.println("4. Exit");
+        System.out.println("4. View Feedback");
+        System.out.println("5. Exit");
         System.out.print("Enter your choice: ");
         int choice = sc.nextInt();
 
@@ -464,6 +465,10 @@ class Manager {
                 updateFood();
                 break;
             case 4:
+                System.out.println("View Feedback");
+                getFeedback();
+                break;
+            case 5:
                 System.out.println("Exit");
                 Restaurant.main(null);
                 break;
