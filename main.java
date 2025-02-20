@@ -34,6 +34,7 @@ class Restaurant {
 class Customer {
     Scanner sc = new Scanner(System.in);
     Menu menu = new Menu();
+    
 
     Customer() {
         System.out.println("Welcome to virtual restaurant");
@@ -117,7 +118,12 @@ class Customer {
     }
 
     void feedback() {
+        System.out.println("please give star rating to our service");
+        int rating = sc.nextInt();
 
+        System.out.println("Please provide your feedback:");
+        String feedback = sc.nextLine();
+        System.out.println("Thank you for your feedback!");
     }
 }
 
@@ -241,7 +247,7 @@ class Menu {
     }
 
     static void printNonVegMenu() {
-        for (int i = 0; i < nonVegMenu.length; i++) {
+        for (int i = 0; i < sizeOfNonVegPrice; i++) {
             System.out.printf("%-45s %5d INR\n", nonVegMenu[i], nonVegPrice[i]);
             // System.out.println(nonVegMenu[i] + " " + nonVegPrice[i] + "INR");
         }
