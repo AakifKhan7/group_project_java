@@ -61,7 +61,7 @@ class Customer {
         int numberOfItems = sc.nextInt();
         int[] selectedFood = new int[numberOfItems];
         for (int itemCount = 0; itemCount < numberOfItems; itemCount++) {
-            System.out.print("Enter the number of your dish (1 to " + Menu.vegMenu.length + "): ");
+            System.out.print("Enter the number of your dish : ");
             int selectedDish = sc.nextInt();
             if (selectedDish >= 1 && selectedDish <= Menu.vegMenu.length) {
                 selectedFood[itemCount] = selectedDish;
@@ -269,15 +269,13 @@ class Menu {
 
 class Bill {
     // Menu menu = new Menu();
-    String[] item = Menu.vegMenu;
-    int[] price = Menu.vegPrice;
 
     double calculateBill(String food_type, int[] selectedFood) {
         int billTotal = 0;
         for (int i = 0; i < selectedFood.length; i++) {
             int dishIndex = selectedFood[i] - 1;
             if (dishIndex >= 0 && dishIndex < Menu.vegMenu.length) {
-                if (food_type == "vegetarian") {
+                if (food_type.equals("vegetarian")) {
                     System.out.println(Menu.vegMenu[dishIndex] + " - Rs." + Menu.vegPrice[dishIndex]);
                     billTotal += Menu.vegPrice[dishIndex];
                 } else {
