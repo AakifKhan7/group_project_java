@@ -2,8 +2,8 @@ import java.util.*;
 
 class Restaurant {
     public static void main(String[] args) {
-        Menu menu = new Menu();
         Scanner sc = new Scanner(System.in);
+        Menu menu = new Menu();
         System.out.println("1. Manager");
         System.out.println("2. Customer");
         System.out.println("3. Exit");
@@ -33,7 +33,6 @@ class Restaurant {
 
 class Customer {
     Scanner sc = new Scanner(System.in);
-    Menu menu = new Menu();
 
     Customer() {
         System.out.println("Welcome to virtual restaurant");
@@ -71,50 +70,14 @@ class Customer {
             }
         }
 
-        Bill bill = new Bill();
-        double billTotal = bill.calculateBill(food_type, selectedFood);
+        Bill bill = new Bill(food_type, selectedFood);
+        
 
         System.out.println();
-        payment(billTotal);
-
-        // payment.makePayment(billTotal);
-    }
-
-    Payment payment = new Payment();
-
-    void payment(double billTotal) {
-        System.out.println("Choose your payment method");
-        String methodToPay = " 1. Credit Card\n 2. Debit Card\n 3. Net Banking\n 4. UPI\n 5. Cash";
-        System.out.println(methodToPay);
-        System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
-        switch (choice) {
-            case 1:
-                System.out.println("Credit Card");
-                payment.payCreditCard(billTotal);
-
-                break;
-            case 2:
-                System.out.println("Debit Card");
-                payment.payDebitCard(billTotal);
-                break;
-            case 3:
-                System.out.println("Net Banking");
-                payment.payNetBanking(billTotal);
-                break;
-            case 4:
-                System.out.println("UPI");
-                payment.payUPI(billTotal);
-                break;
-            case 5:
-                System.out.println("Cash");
-                payment.payCash(billTotal);
-                break;
-            default:
-                System.out.println("Invalid choice");
-        }
+        // payment
 
     }
+
 
     void feedback() {
         int rating = 0;
@@ -161,11 +124,7 @@ class Menu {
     }
 
     static void vegetarianFood() {
-        // System.out.println("You chose Vegetarian food:-");
-        // System.out.println(
-        // "In Vegetarian we have more than 100 dishes,kindly chose your favourite from
-        // given list......");
-        // System.out.println("Here’s a list of popular vegetable-based dishes");
+        
         String menu = "Paneer Butter Masala                          - 250\n" +
                 "Aloo Gobi (Potato & Cauliflower)             - 200\n" +
                 "Baingan Bharta (Roasted Eggplant)            - 220\n" +
@@ -188,7 +147,6 @@ class Menu {
                 "Veggie Sushi Rolls                          - 220\n" +
                 "Greek Salad                                 - 200\n";
         ;
-        // "### **Snacks and Starters**\n";
 
         vegMenu = menu.split("\n");
 
@@ -197,11 +155,10 @@ class Menu {
         int index = 0;
         for (String item : vegMenuItems) {
             if (item.contains("-")) {
-                // Split by '-' to separate the item name and the price
                 String[] parts = item.split(" - ");
                 if (parts.length == 2) {
-                    vegMenu[index] = parts[0].trim(); // Menu item name
-                    vegPrice[index] = Integer.parseInt(parts[1].trim()); // Menu item price
+                    vegMenu[index] = parts[0].trim();
+                    vegPrice[index] = Integer.parseInt(parts[1].trim());
                     index++;
                 }
             }
@@ -213,7 +170,6 @@ class Menu {
 
         for (int i = 0; i < sizeOfVegPrice; i++) {
             System.out.printf("%-5d %-45s %5d INR\n", i + 1, vegMenu[i], vegPrice[i]);
-            // System.out.println(vegMenu[i] + " " + vegPrice[i] + " INR");
         }
     }
 
@@ -261,26 +217,35 @@ class Menu {
     static void printNonVegMenu() {
         for (int i = 0; i < sizeOfNonVegPrice; i++) {
             System.out.printf("%-45s %5d INR\n", nonVegMenu[i], nonVegPrice[i]);
-            // System.out.println(nonVegMenu[i] + " " + nonVegPrice[i] + "INR");
         }
     }
 
 }
 
 class Bill {
-    // Menu menu = new Menu();
+    static double billTotal = 0;
+
+    Bill(String food_type, int[] selectedFood) {
+        this.billTotal = calculateBill(food_type, selectedFood);
+        Payment pay = new Payment();
+
+    }
+
+    Bill(){
+
+    }
+
 
     double calculateBill(String food_type, int[] selectedFood) {
-        int billTotal = 0;
         for (int i = 0; i < selectedFood.length; i++) {
             int dishIndex = selectedFood[i] - 1;
             if (dishIndex >= 0 && dishIndex < Menu.vegMenu.length) {
                 if (food_type.equals("vegetarian")) {
                     System.out.println(Menu.vegMenu[dishIndex] + " - Rs." + Menu.vegPrice[dishIndex]);
-                    billTotal += Menu.vegPrice[dishIndex];
+                    this.billTotal += Menu.vegPrice[dishIndex];
                 } else {
                     System.out.println(Menu.nonVegMenu[dishIndex] + " - Rs." + Menu.nonVegPrice[dishIndex]);
-                    billTotal += Menu.nonVegPrice[dishIndex];
+                    this.billTotal += Menu.nonVegPrice[dishIndex];
                 }
             } else {
                 System.out.println("Invalid dish selected.");
@@ -292,13 +257,47 @@ class Bill {
     }
 }
 
-class FeedBack {
+class FeedBack{
     int[] starRating = new int[50];
     String[] feedback = new String[50];
 
 }
 
-class Payment {
+class Payment extends Bill{
+    
+    Payment(){
+        System.out.println("Choose your payment method");
+        String methodToPay = " 1. Credit Card\n 2. Debit Card\n 3. Net Banking\n 4. UPI\n 5. Cash";
+        System.out.println(methodToPay);
+        System.out.print("Enter your choice: ");
+        int choice = sc.nextInt();
+        switch (choice) {
+            case 1:
+                System.out.println("Credit Card");
+                payCreditCard();
+
+                break;
+            case 2:
+                System.out.println("Debit Card");
+                payDebitCard();
+                break;
+            case 3:
+                System.out.println("Net Banking");
+                payNetBanking();
+                break;
+            case 4:
+                System.out.println("UPI");
+                payUPI();
+                break;
+            case 5:
+                System.out.println("Cash");
+                payCash();
+                break;
+            default:
+                System.out.println("Invalid choice");
+        }
+    }
+
     Scanner sc = new Scanner(System.in);
     double cardBalance = 50000;
     double netBankingBalance = 60000;
@@ -312,7 +311,7 @@ class Payment {
         return String.valueOf(pin).length() == 4;
     }
 
-    void payCreditCard(double billTotal) {
+    void payCreditCard() {
         System.out.println("Enter valid details of your Credit Card:");
 
         long cardNo;
@@ -333,15 +332,15 @@ class Payment {
             }
         } while (!isValidPIN(cardPin));
 
-        if (cardBalance >= billTotal) {
-            cardBalance -= billTotal;
+        if (cardBalance >= super.billTotal) {
+            cardBalance -= super.billTotal;
             System.out.println("Payment successful! Remaining Balance: ₹" + cardBalance);
         } else {
             System.out.println("Insufficient balance!");
         }
     }
 
-    void payDebitCard(double billTotal) {
+    void payDebitCard() {
         System.out.println("Enter valid details of your Debit Card:");
 
         long cardNo;
@@ -362,30 +361,30 @@ class Payment {
             }
         } while (!isValidPIN(cardPin));
 
-        if (cardBalance >= billTotal) {
-            cardBalance -= billTotal;
-            System.out.println("Payment successful! Remaining Balance: ₹" + cardBalance);
+        if (cardBalance >= super.billTotal) {
+            cardBalance -= super.billTotal;
+            System.out.println("Payment successful! Remaining Balance: " + cardBalance + " Rs.");
         } else {
             System.out.println("Insufficient balance!");
         }
     }
 
-    void payNetBanking(double billTotal) {
+    void payNetBanking() {
         System.out.println("Enter your Net Banking credentials:");
         System.out.print("Enter User ID: ");
         String userId = sc.next();
         System.out.print("Enter Password: ");
         String password = sc.next();
 
-        if (netBankingBalance >= billTotal) {
-            netBankingBalance -= billTotal;
+        if (netBankingBalance >= super.billTotal) {
+            netBankingBalance -= super.billTotal;
             System.out.println("Payment successful! Remaining Balance: ₹" + netBankingBalance);
         } else {
             System.out.println("Insufficient balance!");
         }
     }
 
-    void payUPI(double billTotal) {
+    void payUPI() {
         System.out.println("Enter your UPI ID (e.g., yourname@upi):");
         String upiId;
         do {
@@ -412,17 +411,17 @@ class Payment {
         }
     }
 
-    void payCash(double billTotal) {
+    void payCash() {
         double amount;
         do {
             System.out.println("Enter cash amount:");
             amount = sc.nextDouble();
-            if (amount < billTotal) {
-                System.out.println("Insufficient amount! Please enter at least ₹" + billTotal);
+            if (amount < super.billTotal) {
+                System.out.println("Insufficient amount! Please enter at least ₹" + super.billTotal);
             }
         } while (amount < billTotal);
 
-        System.out.println("Payment successful! Change returned: ₹" + (amount - billTotal));
+        System.out.println("Payment successful! Change returned: ₹" + (amount - super.billTotal));
     }
 
 }
