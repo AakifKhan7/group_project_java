@@ -19,7 +19,7 @@ class Restaurant {
                 break;
             case 2:
                 Customer customer = new Customer();
-                customer.selectFood();
+                // customer.selectFood();
                 break;
             case 3:
                 System.out.println("Exit");
@@ -33,13 +33,45 @@ class Restaurant {
 
 class Customer {
     Scanner sc = new Scanner(System.in);
+    String food_type = "";
+    int numberOfSelectedFood = 0;
+    int[] selectedFood;
 
     Customer() {
-        System.out.println("Welcome to virtual restaurant");
+        System.out.println("Welcome Customer");
+        boolean isCustomer = true;
+        while(isCustomer) {
+            System.out.println("1. Select Food");
+            System.out.println("2. Bill & Payment");
+            System.out.println("3. Feedback");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    selectFood();
+                    break;
+                case 2:
+                    payBill();
+                    break;
+                case 3:
+                    feedback();
+                    break;
+
+                case 4:
+                    System.out.println("Exit");
+                    isCustomer = false;
+                    Restaurant.main(null);
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
     }
 
     void selectFood() {
-        String food_type = "";
+        food_type = "";
 
         System.out.println("Choose number for given type of food\n1.vegetarian\n2.Non-Vegetarian ");
         int choiceFood = sc.nextInt();
@@ -57,12 +89,13 @@ class Customer {
         }
 
         System.out.print("How many items you want to order?: ");
-        int numberOfItems = sc.nextInt();
-        int[] selectedFood = new int[numberOfItems];
-        for (int itemCount = 0; itemCount < numberOfItems; itemCount++) {
+        numberOfSelectedFood = sc.nextInt();
+        selectedFood = new int[numberOfSelectedFood];
+        for (int itemCount = 0; itemCount < numberOfSelectedFood; itemCount++) {
             System.out.print("Enter the number of your dish : ");
             int selectedDish = sc.nextInt();
-            if (selectedDish >= 1 && selectedDish <= Menu.vegMenu.length) {
+            if ((food_type.equals("vegetarian") && selectedDish >= 1 && selectedDish <= Menu.vegMenu.length) ||
+                (food_type.equals("non-vegetarian") && selectedDish >= 1 && selectedDish <= Menu.nonVegMenu.length)) {
                 selectedFood[itemCount] = selectedDish;
             } else {
                 System.out.println("Invalid dish number, please try again.");
@@ -70,14 +103,27 @@ class Customer {
             }
         }
 
-        Bill bill = new Bill(food_type, selectedFood);
-        
-
         System.out.println();
-        // payment
+        System.out.println("Your bil is: " + getBill());
 
     }
 
+
+    double getBill(){
+        if (selectedFood == null || selectedFood.length == 0) {
+            System.out.println("No food selected. Please select food first.");
+            return 0;
+        }
+
+        Bill bill = new Bill(food_type, selectedFood);
+        return bill.billTotal;
+    }
+
+    void payBill(){
+        System.out.println();
+        Payment payment = new Payment(food_type, selectedFood);
+
+    }
 
     void feedback() {
         int rating = 0;
@@ -124,7 +170,7 @@ class Menu {
     }
 
     static void vegetarianFood() {
-        
+
         String menu = "Paneer Butter Masala                          - 250\n" +
                 "Aloo Gobi (Potato & Cauliflower)             - 200\n" +
                 "Baingan Bharta (Roasted Eggplant)            - 220\n" +
@@ -223,18 +269,16 @@ class Menu {
 }
 
 class Bill {
-    static double billTotal = 0;
+    double billTotal = 0;
+    String food_type = "";
+    int[] selectedFood;
 
     Bill(String food_type, int[] selectedFood) {
-        this.billTotal = calculateBill(food_type, selectedFood);
-        Payment pay = new Payment();
+        this.food_type = food_type;
+        this.selectedFood = selectedFood;
+        billTotal = calculateBill(food_type, selectedFood);
 
     }
-
-    Bill(){
-
-    }
-
 
     double calculateBill(String food_type, int[] selectedFood) {
         for (int i = 0; i < selectedFood.length; i++) {
@@ -257,15 +301,16 @@ class Bill {
     }
 }
 
-class FeedBack{
-    int[] starRating = new int[50];
-    String[] feedback = new String[50];
+class FeedBack {
+    static int[] starRating = new int[50];
+    static String[] feedback = new String[50];
 
 }
 
-class Payment extends Bill{
-    
-    Payment(){
+class Payment extends Bill {
+
+    Payment(String food_type, int[] selectedFood) {
+        super(food_type, selectedFood);
         System.out.println("Choose your payment method");
         String methodToPay = " 1. Credit Card\n 2. Debit Card\n 3. Net Banking\n 4. UPI\n 5. Cash";
         System.out.println(methodToPay);
@@ -477,7 +522,7 @@ class Manager {
 
     }
 
-    void getFeedback(){
+    void getFeedback() {
         FeedBack feedBack = new FeedBack();
         for (int i = 0; i < feedBack.starRating.length; i++) {
             if (feedBack.starRating[i] != 0) {
