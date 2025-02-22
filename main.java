@@ -88,7 +88,7 @@ class Customer {
             return;
         }
         System.out.print("How many items you want to order?: ");
-        numberOfSelectedFood = sc.nextInt();
+        numberOfSelectedFood = sc.nextInt() ;
         sc.nextLine(); // flush newline
         selectedFood = new int[numberOfSelectedFood];
         for (int itemCount = 0; itemCount < numberOfSelectedFood; itemCount++) {
@@ -120,6 +120,10 @@ class Customer {
     // payBill: processes the payment for the order
     void payBill(){
         System.out.println();
+        if(selectedFood == null){
+            System.out.println("no item selected");
+            return;
+        }
         Payment payment = new Payment(food_type, selectedFood);
     }
     
@@ -133,11 +137,10 @@ class Customer {
         } while (rating < 1 || rating > 5);
         System.out.print("Please provide your feedback:");
         String feedback = sc.nextLine();
-        FeedBack feedBack = new FeedBack();
-        for (int i = 0; i < feedBack.starRating.length; i++) {
-            if (feedBack.starRating[i] == 0) {
-                feedBack.starRating[i] = rating;
-                feedBack.feedback[i] = feedback;
+        for (int i = 0; i < FeedBack.starRating.length; i++) {
+            if (FeedBack.starRating[i] == 0) {
+                FeedBack.starRating[i] = rating;
+                FeedBack.feedback[i] = feedback;
                 break;
             }
         }
@@ -247,7 +250,7 @@ class Menu {
     // printNonVegMenu: prints the non-vegetarian menu
     static void printNonVegMenu() {
         for (int i = 0; i < sizeOfNonVegPrice; i++) {
-            System.out.printf("%-45s %5d INR\n", nonVegMenu[i], nonVegPrice[i]);
+            System.out.printf("%5d %-45s %5d INR\n", i + 1,nonVegMenu[i], nonVegPrice[i]);
         }
     }
 }
