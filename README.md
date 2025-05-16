@@ -58,4 +58,4 @@ This is a simple Java-based console application that simulates a virtual restaur
 
 ## Author
 
-Aakifkhan, Ronit, Nell
+Aakifkhan, Ronit, Neel
